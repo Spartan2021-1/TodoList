@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise'
+var mysql =require('mysql2/promise')
 
 //const config = require('../../config/config.json')["production"]
 const config = require('../config/config.json')["development"]

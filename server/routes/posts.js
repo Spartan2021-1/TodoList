@@ -1,9 +1,27 @@
+
 var express = require('express');
 var router = express.Router();
 
+import db from '../middleware/db.js';
+import httpStatus from 'http-status-codes';
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', async function(req, res, next) {
+    try {
+        let postInfo = await db.query('SELECT * from todolists;');
+        
+        if(postInfo.length > 0){
+            const returnObj = {
+                postInfo : postInfo
+            }
+            res.status(httpStatus.OK).send(returnObj)
+        } else{
+            res.status(httpStatus.NOT_FOUND).send()
+        }
+   } catch(error) {
+        console.error(error, "posts api error")
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).send([])
+   }
 });
 
 module.exports = router;
