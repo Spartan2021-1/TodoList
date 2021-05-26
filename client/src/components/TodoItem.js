@@ -78,7 +78,7 @@ function TodoItem({Todo, onToggle, onRemove}) {
         <div onClick={()=>{setdone(!done); onToggle(Todo.id)}}>
             {done?<CheckCircle done={done}>{done && <MdDone />}</CheckCircle>:<EmptyCircle/>}
         </div>
-        <Text done={done}>{Todo.text}</Text>
+        <Text done={done}>{Todo.context}</Text>
         <Remove onClick={()=> onRemove(Todo.id)}>
             <MdDelete />
         </Remove>

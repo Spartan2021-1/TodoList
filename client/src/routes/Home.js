@@ -2,6 +2,7 @@ import React from 'react';
 import {createGlobalStyle} from 'styled-components';
 import styled from 'styled-components';
 import {Menu, TodoTemplate, TodoHead, TodoItem, TodoCreate} from '../components';
+import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -26,31 +27,14 @@ class Home extends React.Component {
     }
   }
 
-  componentDidMount(){
-    const lists = [
-        {
-            id : 1,
-            text : "프로젝트 생성하기",
-            done : true,
-        },
-        {
-            id : 2,
-            text : "컴포넌트 스타일링 하기",
-            done : true,
-        },
-        {
-            id : 3,
-            text : "API 적용하기",
-            done : false,
-        },
-        {
-            id : 4,
-            text : "기능 구현하기",
-            done : false,
-        },
-    ]
-    this.setState({lists:lists});
-    this.setState({len : lists.filter(list => list.done === false).length})
+  componentDidMount = async () => {
+    await axios.get("http://localhost:5000/post/")
+    .then((res) =>{
+      console.log(res.data.postInfo);
+      this.setState({lists:res.data.postInfo});  
+    })
+    
+    this.setState({len : this.state.lists.filter(list => list.done === false).length})
     this.onToggle = this.onToggle.bind(this);
     this.onRemove = this.onRemove.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
